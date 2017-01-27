@@ -1,6 +1,6 @@
 # Fraud Detection from Enron Email Dataset
 
-Machine Learning Project on detecting Fraud from Enron Email
+In 2000, Enron was one of the largest companies in the United States. By 2002, it had collapsed into bankruptcy due to widespread corporate fraud. In the resulting Federal investigation, a significant amount of typically confidential information entered into the public record, including tens of thousands of emails and detailed financial data for top executives.  
 
 This project uses scikit-learn library to perform many tasks. These include feature scaling, supervised classification, selecting K best features, validation and evaluation metrics.
 
