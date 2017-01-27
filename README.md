@@ -11,10 +11,12 @@ This project uses scikit-learn library to perform many tasks. These include feat
 4. my_feature_list.pkl : List of identified features from raw dataset  
 
 
-### Results
+### Final Results
 
 The following results were obtained.
 
 1. Gaussian Naive Bayes Classifier was used. With this classifier, we ran the classifier with 1000 random splitting of dataset. The mean of precision and recall was taken. The mean precision and recall values came up to be 0.22.  
 2. Decision Tree Classifier was used to compare the results. With this classifier untuned, we go a poor result. The mean precision and recall came up to be 0.09.
-3. After tuning the decision tree classifier with test_size=0.18, min_samples_split=10000, criterion='entropy',splitter='random', max_features='auto', we found that the precision and recall values went up. They came up to be 0.375.
+3. After tuning the decision tree classifier with test_size=0.18, min_samples_split=10000, criterion='entropy',splitter='random', max_features='auto', we found that the precision and recall values went up. They came up to be 0.375.  
+
+All intermediate results can be obtained as comments in poi_id.py file or after running the python code.  
