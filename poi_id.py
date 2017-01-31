@@ -2,7 +2,8 @@
 
 import sys
 import pickle
-import numpy
+import numpy as np
+import pandas
 sys.path.append("tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
@@ -22,6 +23,9 @@ features_list = ['poi'] # You will need to use more features
 ### Load the dictionary containing the dataset
 with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
+    ###creating dataFrame from dictionary - pandas
+    df = pandas.DataFrame.from_dict(data_dict, orient='index', dtype=np.float)  
+    print df.describe().loc[:,['salary','bonus']]
 
 ### Task 2: Remove outliers
 
@@ -153,8 +157,8 @@ for i in range(100):
     recall_list.append(getRecall(pred, labels_test))
 
 print "For Gaussian Naive Bayesian : "
-print "Precision: ", numpy.mean(precision_list)
-print "Recall: ", numpy.mean(recall_list)
+print "Precision: ", np.mean(precision_list)
+print "Recall: ", np.mean(recall_list)
 
 ### Classifier 2 : Decision Tree Classifier
 precision_list = []
@@ -168,8 +172,8 @@ for i in range(100):
     recall_list.append(getRecall(pred, labels_test))
 
 print "For Decision Tree Classifier before tuning parameters: "
-print "Precision: ", numpy.mean(precision_list)
-print "Recall: ", numpy.mean(recall_list)
+print "Precision: ", np.mean(precision_list)
+print "Recall: ", np.mean(recall_list)
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall 
 ### using our testing script. Check the tester.py script in the final project
 ### folder for details on the evaluation method, especially the test_classifier
