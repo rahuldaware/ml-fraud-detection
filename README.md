@@ -10,6 +10,17 @@ This project uses scikit-learn library to perform many tasks. These include feat
 3. my_dataset.pkl : Pickle file for dataset with new features  
 4. my_feature_list.pkl : List of identified features from raw dataset  
 
+### Understanding the Dataset
+1. Total number of data points : 146
+2. 18 points are marked as POI and 128 are marked as non POI
+3. The list of features used are :  
+```
+['poi', 'asset', 'ratio_to_poi', 'ratio_from_poi', 'shared_receipt_with_poi',
+'expenses', 'long_term_incentive', 'loan_advances', 'restricted_stock', 
+'restricted_stock_deferred', 'deferred_income', 'salary',
+'deferral_payments', 'total_stock_value', 'exercised_stock_options',
+'total_payments', 'bonus', 'other']
+```
 
 ### Final Results
 
