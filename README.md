@@ -21,6 +21,16 @@ This project uses scikit-learn library to perform many tasks. These include feat
 'deferral_payments', 'total_stock_value', 'exercised_stock_options',
 'total_payments', 'bonus', 'other']
 ```
+### Feature Selection
+
+I implemented three new features. First one is asset. This feature is the sum of salary, bonus and stock values. Second one being ratio_to_poi. This is the fraction of emails from this person to POI and total messages from this person. The last one being ratio_from_poi. This is the fraction of email to this person from POI to the total messages to this person. The precision and recall values before and after adding these features were calculated for a decision tree classifer. The values are as follows :
+
+|  Evaluation Metrics       | Before adding new features | After adding new features  |
+| ------------- |:-------------:| -----:|
+| Precision      | 0.083 | 0.083 |
+| Recall      |  0.2083 |   0.2083 |
+
+The reason to add these new features is pretty obvious. They reflect to be the most important features which would signify fraudulent activities.  
 
 ### Final Results
 
