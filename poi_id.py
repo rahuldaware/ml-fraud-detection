@@ -11,15 +11,20 @@ from tester import dump_classifier_and_data
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.feature_selection import SelectKBest
 from sklearn.naive_bayes import GaussianNB
-from sklearn.cross_validation import train_test_split
+from sklearn.cross_validation import StratifiedShuffleSplit
 from sklearn.metrics import accuracy_score, precision_score, recall_score
-from sklearn.tree import DecisionTreeClassifier
+from sklearn import cross_validation
+import matplotlib.pyplot as plt
+from sklearn import preprocessing
+
+from sklearn.model_selection import GridSearchCV
+from sklearn import tree
 
 ### Task 1: Select what features you'll use.
 ### features_list is a list of strings, each of which is a feature name.
 ### The first feature must be "poi".
 features_list = ['poi'] # You will need to use more features
-
+initial_list = features_list
 ### Load the dictionary containing the dataset
 with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
@@ -100,103 +105,65 @@ features_list.append('other')
 data = featureFormat(my_dataset, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 
-### After creating new features and adding them to list of features,
-### it is time to scale features using minmaxscaler
-
-scaler = MinMaxScaler()
-features = scaler.fit_transform(features)
-
 ### Next step is to select top 5 features using SelectKBest features
+def get_plot(feature, score):
+    y_pos = np.arange(len(feature))
+    plt.barh(y_pos,score, align='center', alpha=0.5)
+    plt.yticks(y_pos, feature)
+    plt.xlabel("Score")
+    plt.title("Scores of each feature")
+    plt.show()
 
-kbest = SelectKBest(k=5)
-kbest.fit(features, labels)
+def get_k_best(labels, features, k):
+    kbest = SelectKBest(k=k)
+    kbest.fit(features, labels)
+    score = kbest.scores_
+    unsorted_features = zip(features_list[1:], score)
+    sorted_features = list(reversed(sorted(unsorted_features, key=lambda x: x[1])))
+    feature = []
+    score = []
+    k_best_features = dict(sorted_features[:k])
+    top_k = sorted_features[:k]
+    for i in range(0,k):
+        feature.append(top_k[i][0])
+        score.append(top_k[i][1])
+    #get_plot(feature,score)
+    
+    return k_best_features
 
-top5 = kbest.get_support()
+best_features = get_k_best(labels, features, 6)
+### By running the above function and from the plot, we can say with guarantee that top 6 features would give optimal algorithm.
+my_feature_list = best_features.keys()
+my_feature_list.append('poi')
 
-results_list = zip(kbest.get_support(), features_list[1:], kbest.scores_)
-results_list = sorted(results_list, key=lambda x: x[2], reverse=True)
-
-### 5 Best Features chosen from above are : 
-### 1. exercised_stock_options
-### 2. total_stock_value
-### 3. bonus
-### 4. salary
-### 5. ratio_to_poi
-
-selected_features = ['exercised_stock_options','total_stock_value','bonus','salary','ratio_to_poi']
-
-data = featureFormat(my_dataset, selected_features, sort_keys = True)
+### Extract the features specified in features_list
+data = featureFormat(my_dataset,my_feature_list)
 labels, features = targetFeatureSplit(data)
 
-### Task 4: Try a varity of classifiers
-### Please name your classifier clf for easy export below.
-### Note that if you want to do PCA or other multi-stage operations,
-### you'll need to use Pipelines. For more info:
-### http://scikit-learn.org/stable/modules/pipeline.html
+### Scale features using MinMaxScaler
+scaler = preprocessing.MinMaxScaler()
+features = scaler.fit_transform(features)
 
-# Provided to give you a starting point. Try a variety of classifiers.
 
-def getPrecision(prediction, labels_test):
-    return precision_score(labels_test, prediction, average='micro')
+### Using Classification Algorithms
 
-def getRecall(prediction, labels_test):
-    return recall_score(labels_test, prediction, average='micro')
+def evaluate_classifier(grid_search, features, labels, num_iters=1000, test_size=0.2):
+    accuracy = []
+    precision = []
+    recall = []
+    for iteration in range(num_iters):
+        features_train, features_test, labels_train, labels_test = cross_validation.train_test_split(features, labels,test_size=test_size, random_state=iteration)
+        grid_search.fit(features_train, labels_train)
+        predictions = grid_search.predict(features_test)
+        accuracy.append(accuracy_score(labels_test, predictions))
+        precision.append(precision_score(labels_test, predictions, average='micro'))
+        recall.append(precision_score(labels_test, predictions, average='micro'))
 
-### Classifier 1 : Naive Bayes
-precision_list = []
-recall_list = []
+    print "precision: {}".format(np.mean(precision))
+    print "recall:    {}".format(np.mean(recall))
+### Gaussian Naive Bayes
 
-### Before starting with classifiers, let us validate the data into training and test sets
-### Also, let us run the classifier for 100 different validations and take mean value of recall and precision
-for i in range(100):
-    features_train, features_test, labels_train, labels_test = train_test_split(features, labels, random_state = i)
-    clf = GaussianNB()
-    clf.fit(features_train, labels_train)
-    pred = clf.predict(features_test)
-    precision_list.append(getPrecision(pred, labels_test))
-    recall_list.append(getRecall(pred, labels_test))
-
-print "For Gaussian Naive Bayesian : "
-print "Precision: ", np.mean(precision_list)
-print "Recall: ", np.mean(recall_list)
-
-### Classifier 2 : Decision Tree Classifier
-precision_list = []
-recall_list = []
-for i in range(100):
-    features_train, features_test, labels_train, labels_test = train_test_split(features, labels, random_state = i)
-    clf = DecisionTreeClassifier()
-    clf.fit(features_train, labels_train)
-    pred = clf.predict(features_test)
-    precision_list.append(getPrecision(pred, labels_test))
-    recall_list.append(getRecall(pred, labels_test))
-
-print "For Decision Tree Classifier before tuning parameters: "
-print "Precision: ", np.mean(precision_list)
-print "Recall: ", np.mean(recall_list)
-### Task 5: Tune your classifier to achieve better than .3 precision and recall 
-### using our testing script. Check the tester.py script in the final project
-### folder for details on the evaluation method, especially the test_classifier
-### function. Because of the small size of the dataset, the script uses
-### stratified shuffle split cross validation. For more info: 
-### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
-
-# Example starting point. Try investigating other evaluation techniques!
-features_train, features_test, labels_train, labels_test = \
-    train_test_split(features, labels, test_size=0.18)
-
-#clf = GaussianNB()
-clf = DecisionTreeClassifier(criterion='entropy',splitter='random',max_features='auto',min_samples_split=10000)
-clf.fit(features_train, labels_train)
-pred = clf.predict(features_test)
-
-print "For Decision Tree Classifier after tuning parameters: "
-print "Precision: ", getPrecision(pred, labels_test)
-print "Recall: ", getRecall(pred, labels_test)
-
-### Task 6: Dump your classifier, dataset, and features_list so anyone can
-### check your results. You do not need to change anything below, but make sure
-### that the version of poi_id.py that you submit can be run on its own and
-### generates the necessary .pkl files for validating your results.
-
-dump_classifier_and_data(clf, my_dataset, features_list)
+clf = GaussianNB()
+parameters = {}
+grid_search = GridSearchCV(clf, parameters)
+evaluate_classifier(grid_search, features, labels, num_iters=100, test_size=0.2)
