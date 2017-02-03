@@ -16,6 +16,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score
 from sklearn import cross_validation
 import matplotlib.pyplot as plt
 from sklearn import preprocessing
+from sklearn.cluster import KMeans
 
 from sklearn.model_selection import GridSearchCV
 from sklearn import tree
@@ -131,7 +132,7 @@ def get_k_best(labels, features, k):
     
     return k_best_features
 
-best_features = get_k_best(labels, features, 6)
+best_features = get_k_best(labels, features, 7)
 ### By running the above function and from the plot, we can say with guarantee that top 6 features would give optimal algorithm.
 my_feature_list = best_features.keys()
 my_feature_list.append('poi')
@@ -157,13 +158,59 @@ def evaluate_classifier(grid_search, features, labels, num_iters=1000, test_size
         predictions = grid_search.predict(features_test)
         accuracy.append(accuracy_score(labels_test, predictions))
         precision.append(precision_score(labels_test, predictions, average='micro'))
-        recall.append(precision_score(labels_test, predictions, average='micro'))
+        recall.append(recall_score(labels_test, predictions, average='micro'))
+        
+        
 
     print "precision: {}".format(np.mean(precision))
     print "recall:    {}".format(np.mean(recall))
-### Gaussian Naive Bayes
+    best_params = grid_search.best_estimator_.get_params()
+    for param_name in sorted(parameters.keys()):
+            print '%s=%r, ' % (param_name, best_params[param_name])
 
-clf = GaussianNB()
-parameters = {}
+
+### Gaussian Naive Bayes
+# clf = GaussianNB()
+# parameters = {}
+# grid_search = GridSearchCV(clf, parameters)
+# evaluate_classifier(grid_search, features, labels, num_iters=100, test_size=0.2)
+
+## Results of Gaussian Naive Bayes
+# precision: 0.323571428571
+# recall:    0.323571428571
+
+
+### K-Means Clustering
+# clf = KMeans(n_clusters=2, tol=0.001)
+# parameters = {}
+# grid_search = GridSearchCV(clf, parameters)
+# evaluate_classifier(grid_search, features, labels, num_iters=100, test_size=0.2)
+
+## Results of K-Means Clustering
+# precision: 0.256071428571
+# recall:    0.256071428571
+
+### Decision Tree Classifier
+clf = tree.DecisionTreeClassifier()
+parameters = {'criterion': ['gini'],
+               'min_samples_split': [2],
+               'max_depth': [None],
+               'min_samples_leaf': [5],
+               'max_leaf_nodes': [None]}
 grid_search = GridSearchCV(clf, parameters)
 evaluate_classifier(grid_search, features, labels, num_iters=100, test_size=0.2)
+
+### Results of Decision Tree Classifier
+# precision: 0.328928571429
+# recall:    0.328928571429
+# criterion='gini',
+# max_depth=None,
+# max_leaf_nodes=None,
+# min_samples_leaf=5,
+# min_samples_split=2,
+
+# Selected Classifier : Decision Tree Classifier
+# Dump your Classifier
+pickle.dump(clf, open("my_classifier.pkl", "w"))
+pickle.dump(my_dataset, open("my_dataset.pkl", "w"))
+pickle.dump(my_feature_list, open("my_feature_list.pkl", "w"))
