@@ -35,6 +35,8 @@ The following are scores of features which got selected. The data was used for t
 | deferred_income   | 11.595547659730601 |
 | long_term_incentive   | 10.072454529369441 |
 
+### Validation
+After carefully observing the evaluation metrics for different test_sizes, I found 20% of the dataset as test set and 80% as training set gives optimal results. This parameter is very useful is tuning the evaluation of our algorithm. This will perfectly trade-off bias and variance of our algorithm.
 
 ### Feature Selection
 
