@@ -45,14 +45,13 @@ I implemented three new features. First one is asset. This feature is the sum of
 | Before adding new features      | 0.083 | 0.083 |
 | After adding new features      |  0.2083 |   0.2083 |
 
-The reason to add these new features is pretty obvious. They reflect to be the most important features which would signify fraudulent activities.  
+The reason to add these new features is pretty obvious. They reflect to be the most important features which would signify fraudulent activities. 
 
+### Algorithms
+1. The first algorithm used was Gaussian Naive Bayes. After trying various values, I obtained best precision and recall when test_size was 0.2 for 100 iterations. The precision and recall values obtained are: precision = 0.323571428571, recall = 0.323571428571.  
+2. The second algorithm tried was K-Means Clustering. For k=2 and tol=0.001, I obtained the best precision and recall values. They were precision = 0.256071428571, recall = 0.256071428571.  
+3. The third algorithm was Decision Tree Classifier. The best precision and recall values were obtained for this algorithm. I tried to tune this algorithm many times. The best tuning parameters were criterion='gini', max_depth=None, max_leaf_nodes=None, min_samples_leaf=5 and min_samples_split=2. The precision and recall values obtained here were precision = 0.328928571429, recall = 0.328928571429. 
 ### Final Results
-
-The following results were obtained.
-
-1. Gaussian Naive Bayes Classifier was used. With this classifier, we ran the classifier with 1000 random splitting of dataset. The mean of precision and recall was taken. The mean precision and recall values came up to be 0.22.  
-2. Decision Tree Classifier was used to compare the results. With this classifier untuned, we go a poor result. The mean precision and recall came up to be 0.09.
-3. After tuning the decision tree classifier with test_size=0.18, min_samples_split=10000, criterion='entropy',splitter='random', max_features='auto', we found that the precision and recall values went up. They came up to be 0.375.  
+From the precision and recall values, the winner was Decision Tree Classifier with the tuning parameters mentioned before. We have successfully obtained a classifier which performs better than our expectation of precision and recall value above 0.3. 
 
 All intermediate results can be obtained as comments in poi_id.py file or after running the python code.  
