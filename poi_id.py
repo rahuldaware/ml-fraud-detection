@@ -138,7 +138,7 @@ def get_k_best(labels, features, k):
     return k_best_features
 
 ### Following are the scores of features
-# [('exercised_stock_options', 25.097541528735491), ('total_stock_value', 24.467654047526398), ('bonus', 21.060001707536571), ('salary', 18.575703268041 785), ('ratio_to_poi', 16.641707070468989), ('asset', 15.554588511146999), ('deferred_income', 11.595547659730601), ('long_term_incentive', 10.072454529369441), ('restricted_stock', 9.3467007910514877), ('total_payments', 8.8667215371077717), ('shared_receipt_with_poi', 8.7464855321290802), ('loan_advances', 7.2427303965360181), ('expenses', 6.2342011405067401), ('other', 4.204970858301416), ('ratio_from_poi', 3.2107619169667441), ('deferral_payments', 0.2170589303395084), ('restricted_stock_deferred', 0.06498431172371151)]
+# [('exercised_stock_options', 25.097541528735491), ('total_stock_value', 24.467654047526398), ('bonus', 21.060001707536571), ('salary', 18.575703268041785), ('ratio_to_poi', 16.641707070468989), ('asset', 15.554588511146999), ('deferred_income', 11.595547659730601), ('long_term_incentive', 10.072454529369441), ('restricted_stock', 9.3467007910514877), ('total_payments', 8.8667215371077717), ('shared_receipt_with_poi', 8.7464855321290802), ('loan_advances', 7.2427303965360181), ('expenses', 6.2342011405067401), ('other', 4.204970858301416), ('ratio_from_poi', 3.2107619169667441), ('deferral_payments', 0.2170589303395084), ('restricted_stock_deferred', 0.06498431172371151)]
 
 best_features = get_k_best(labels, features, 7)
 ### By running the above function and from the plot, we can say with guarantee that top 6 features would give optimal algorithm.
