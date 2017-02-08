@@ -201,10 +201,10 @@ def evaluate_classifier(grid_search, features, labels, num_iters=1000, test_size
 
 
 ### K-Means Clustering
-# clf = KMeans(n_clusters=2, tol=0.001)
-# parameters = {}
-# grid_search = GridSearchCV(clf, parameters)
-# evaluate_classifier(grid_search, features, labels, num_iters=100, test_size=0.2)
+clf = KMeans(n_clusters=2, tol=0.001)
+parameters = {}
+grid_search = GridSearchCV(clf, parameters)
+evaluate_classifier(grid_search, features, labels, num_iters=100, test_size=0.2)
 
 ## Results of K-Means Clustering
 # precision: 0.256071428571
@@ -225,9 +225,6 @@ evaluate_classifier(grid_search, features, labels, num_iters=100, test_size=0.2)
 # Precision is the fraction of retrieved instances that are relevant
 # Recall is the fraction of relevant instances that are retrieved.
 
-#  
-
-
 ### Results of Decision Tree Classifier
 # precision: 0.328928571429
 # recall:    0.328928571429
@@ -238,7 +235,10 @@ evaluate_classifier(grid_search, features, labels, num_iters=100, test_size=0.2)
 # min_samples_split=2,
 
 # Selected Classifier : Decision Tree Classifier
-# Dump your Classifier
-pickle.dump(clf, open("my_classifier.pkl", "w"))
-pickle.dump(my_dataset, open("my_dataset.pkl", "w"))
-pickle.dump(my_feature_list, open("my_feature_list.pkl", "w"))
+
+### Task 6: Dump your classifier, dataset, and features_list so anyone can
+### check your results. You do not need to change anything below, but make sure
+### that the version of poi_id.py that you submit can be run on its own and
+### generates the necessary .pkl files for validating your results.
+
+dump_classifier_and_data(clf, my_dataset, features_list)
