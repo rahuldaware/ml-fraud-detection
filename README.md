@@ -36,7 +36,7 @@ The following are scores of features which got selected. The data was used for t
 | long_term_incentive   | 10.072454529369441 |
 
 ### Validation
-After carefully observing the evaluation metrics for different test_sizes, I found 20% of the dataset as test set and 80% as training set gives optimal results. This parameter is very useful is tuning the evaluation of our algorithm. This will perfectly trade-off bias and variance of our algorithm.
+After carefully observing the evaluation metrics for different test_sizes, I found 20% of the dataset as test set and 80% as training set gives optimal results. Precision and recall values were calculated for different proportion of test set and training set. I found that at 80-20 ratio, highest precision and recall was found. This parameter is very useful is tuning the evaluation of our algorithm. This will perfectly trade-off bias and variance of our algorithm.
 
 ### Feature Selection
 

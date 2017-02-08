@@ -43,8 +43,11 @@ no_of_data_features = len(data_dict[data_dict.keys()[0]])
 #for feature in data_dict[data_dict.keys()[0]]:
     #print "Feature : ", feature
 
+# By visually understanding the dataset, I found out TOTAL and THE TRAVEL AGENCY IN THE PARK looks to be outliers
+# that are not relevant
 
 del data_dict["TOTAL"]
+del data_dict["THE TRAVEL AGENCY IN THE PARK"]
 ### Task 3: Create new feature(s)
 ### Store to my_dataset for easy export below.
 my_dataset = data_dict
@@ -106,7 +109,12 @@ features_list.append('other')
 data = featureFormat(my_dataset, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 
-### Next step is to select top 5 features using SelectKBest features
+# FEATURE SELECTION
+# Feature Selection was done by taking using SelectKBest features,
+# Then precision and recall was calculated for untuned DecisionTreeClassifier
+# It was observed that top 7 features give highest precision and recall
+# These 7 features were used with tuned classifiers to identify the best classifier.
+### Next step is to select top 7 features using SelectKBest features
 def get_plot(feature, score):
     y_pos = np.arange(len(feature))
     plt.barh(y_pos,score, align='center', alpha=0.5)
@@ -149,6 +157,10 @@ my_feature_list.append('poi')
 data = featureFormat(my_dataset,my_feature_list)
 labels, features = targetFeatureSplit(data)
 
+### FEATURE SCALING
+# Feature scaling is important to bring all features on the same scale. This is important in this case because
+# there are varied scales like salary and ratio_from_poi. This will make salary to make very high effect on 
+# classifier accuracy. To avoid this, classifer is very important.
 ### Scale features using MinMaxScaler
 scaler = preprocessing.MinMaxScaler()
 features = scaler.fit_transform(features)
@@ -207,6 +219,14 @@ parameters = {'criterion': ['gini'],
                'max_leaf_nodes': [None]}
 grid_search = GridSearchCV(clf, parameters)
 evaluate_classifier(grid_search, features, labels, num_iters=100, test_size=0.2)
+
+### VALIDATION AND EVALUATION
+# Precision and Recall were used as evaluation parameters.
+# Precision is the fraction of retrieved instances that are relevant
+# Recall is the fraction of relevant instances that are retrieved.
+
+#  
+
 
 ### Results of Decision Tree Classifier
 # precision: 0.328928571429
