@@ -21,6 +21,9 @@ This project uses scikit-learn library to perform many tasks. These include feat
 'deferral_payments', 'total_stock_value', 'exercised_stock_options',
 'total_payments', 'bonus', 'other']
 ```
+### Outliers
+I found TOTAL and THE TRAVEL AGENCY IN THE PARK are outliers from the scope of this project.  
+
 ### Feature Scores
 The following are scores of features which got selected. The data was used for these features only.
 
@@ -36,7 +39,19 @@ The following are scores of features which got selected. The data was used for t
 | long_term_incentive   | 10.072454529369441 |
 
 ### Validation
-After carefully observing the evaluation metrics for different test_sizes, I found 20% of the dataset as test set and 80% as training set gives optimal results. Precision and recall values were calculated for different proportion of test set and training set. I found that at 80-20 ratio, highest precision and recall was found. This parameter is very useful is tuning the evaluation of our algorithm. This will perfectly trade-off bias and variance of our algorithm.
+After carefully observing the evaluation metrics for different test_sizes, I found 20% of the dataset as test set and 80% as training set gives optimal results. Precision and recall values were calculated for different proportion of test set and training set. At this ratio, highest precision and recall was found. This parameter is very useful is tuning the evaluation of our algorithm. This will perfectly trade-off bias and variance of our algorithm.
+
+Say, you have 10 balls (6 white and 4 red balls) in a box. I know you are not colorblind but still somebody asked you to pick up the red balls from them. What you did is that you thought 7 balls as red, picked them from the box and put them in a tray. Among these 7 balls, you picked 2 red balls and 5 white balls (but you thought all of them are red).
+
+Your precision in picking red ball is number of correct pick-ups/(number of correct pick-ups + number of wrong pick-ups) which is 2/(2+5) = 2/7 = 28% in this case. Now, look carefully that your denominator can also be like (total pick-ups).
+
+Your recall in picking red ball is number of correct pick-ups/(number of correct pick-ups + number of red balls that you missed) which is 2/(2+2) = 2/4 = 50% in this case.
+
+Now, what do they mean? Precision says how exact you were among your pick-ups. So, as you picked them up as red balls, you were 28% exact. Recall says, how complete you were among your pick-ups. So, as you picked them up as red balls, you were 50% complete in identifying all the red balls.
+
+### Feature Scaling  
+
+Feature scaling is important to bring all features on the same scale. This is important in this case because there are varied scales like salary and ratio_from_poi. This will make salary to make very high effect on classifier accuracy. To avoid this, classifer is very important. I used MinMaxScaler in this project as it brings all the features on a same relative scale.  
 
 ### Feature Selection
 
@@ -57,3 +72,6 @@ The reason to add these new features is pretty obvious. They reflect to be the m
 From the precision and recall values, the winner was Decision Tree Classifier with the tuning parameters mentioned before. We have successfully obtained a classifier which performs better than our expectation of precision and recall value above 0.3. 
 
 All intermediate results can be obtained as comments in poi_id.py file or after running the python code.  
+
+### References
+-  http://rushdishams.blogspot.co.id/2011/03/precision-and-recall.html
