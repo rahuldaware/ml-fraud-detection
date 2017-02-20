@@ -39,6 +39,8 @@ The following are scores of features which got selected. The data was used for t
 | long_term_incentive   | 10.072454529369441 |
 
 ### Validation
+Cross Validation is a model validation technique for assessing how the results of a statistical analysis will generalize to an independent data set. It is mainly used in settings where the goal is prediction, and one wants to estimate how accurately a predictive model will perform in practice. In a prediction problem, a model is usually given a dataset of known data on which training is run (training dataset), and a dataset of unknown data (or first seen data) against which the model is tested (testing dataset). The goal of cross validation is to define a dataset to "test" the model in the training phase (i.e., the validation dataset), in order to limit problems like overfitting, give an insight on how the model will generalize to an independent dataset (i.e., an unknown dataset, for instance from a real problem), etc.
+
 After carefully observing the evaluation metrics for different test_sizes, I found 20% of the dataset as test set and 80% as training set gives optimal results. Precision and recall values were calculated for different proportion of test set and training set. At this ratio, highest precision and recall was found. This parameter is very useful is tuning the evaluation of our algorithm. This will perfectly trade-off bias and variance of our algorithm.
 
 Say, you have 10 balls (6 white and 4 red balls) in a box. I know you are not colorblind but still somebody asked you to pick up the red balls from them. What you did is that you thought 7 balls as red, picked them from the box and put them in a tray. Among these 7 balls, you picked 2 red balls and 5 white balls (but you thought all of them are red).
@@ -93,3 +95,4 @@ All intermediate results can be obtained as comments in poi_id.py file or after 
 
 ### References
 -  http://rushdishams.blogspot.co.id/2011/03/precision-and-recall.html
+-  https://en.wikipedia.org/wiki/Cross-validation_%28statistics%29
