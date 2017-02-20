@@ -80,7 +80,7 @@ The table of precision and recall values for different values of k is as follows
 | 14      |  0.305 |   0.305 |
 | 15      |  0.3 |   0.3 |
 
-The reason to add these new features is pretty obvious. They reflect to be the most important features which would signify fraudulent activities. 
+From the above table, we can see the choice of 7 features wil give best precision and recall. The reason to add these new features is pretty obvious. They reflect to be the most important features which would signify fraudulent activities.
 
 ### Algorithms
 1. The first algorithm used was Gaussian Naive Bayes. After trying various values, I obtained best precision and recall when test_size was 0.2 for 100 iterations. The precision and recall values obtained are: precision = 0.323571428571, recall = 0.323571428571.  
