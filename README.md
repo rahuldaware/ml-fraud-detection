@@ -62,6 +62,24 @@ I implemented three new features. First one is asset. This feature is the sum of
 | Before adding new features      | 0.083 | 0.083 |
 | After adding new features      |  0.2083 |   0.2083 |
 
+The table of precision and recall values for different values of k is as follows : 
+
+|  Number of Metrics      | Precision | Recall  |
+| ------------- |:-------------:| -----:|
+| 3     | 0.0257 | 0.0257 |
+| 4      |  0.026 |   0.026 |
+| 5      |  0.05 |   0.05 |
+| 6      |  0.2559 |   0.2559 |
+| **7**      |  **0.3235** |   **0.3235** |
+| 8      |  0.316 |   0.316 |
+| 9      |  0.3182 |   0.3182 |
+| 10      |  0.308 |   0.308 |
+| 11      |  0.295 |   0.295 |
+| 12      |  0.31 |   0.31 |
+| 13      |  0.298 |   0.298 |
+| 14      |  0.305 |   0.305 |
+| 15      |  0.3 |   0.3 |
+
 The reason to add these new features is pretty obvious. They reflect to be the most important features which would signify fraudulent activities. 
 
 ### Algorithms
